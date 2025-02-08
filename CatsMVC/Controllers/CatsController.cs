@@ -7,22 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CatsMVC.Data;
 using CatsMVC.Data.Entities;
+using CatsMVC.Services.Abstractions;
+using CatsMVC.DTOs;
 
 namespace CatsMVC.Controllers
 {
     public class CatsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICatService _catService;
 
-        public CatsController(ApplicationDbContext context)
+        public CatsController(ICatService catService)
         {
-            _context = context;
+            _catService = catService;
         }
 
         // GET: Cats
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cat.ToListAsync());
+            return View(await _catService.GetAllAsync());
         }
 
         // GET: Cats/Details/5
@@ -33,8 +35,7 @@ namespace CatsMVC.Controllers
                 return NotFound();
             }
 
-            var cat = await _context.Cat
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cat = await _catService.GetByIdAsync(id.Value);
             if (cat == null)
             {
                 return NotFound();
@@ -54,15 +55,14 @@ namespace CatsMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Age,Breed,ImageUrl")] Cat cat)
+        public async Task<IActionResult> Create([Bind("Id,Name,Age,Breed,ImageUrl")] CatDTO catDto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cat);
-                await _context.SaveChangesAsync();
+                await _catService.CreateAsync(catDto);
                 return RedirectToAction(nameof(Index));
             }
-            return View(cat);
+            return View(catDto);
         }
 
         // GET: Cats/Edit/5
@@ -73,7 +73,7 @@ namespace CatsMVC.Controllers
                 return NotFound();
             }
 
-            var cat = await _context.Cat.FindAsync(id);
+            var cat = await _catService.GetByIdAsync(id.Value);
             if (cat == null)
             {
                 return NotFound();
@@ -86,9 +86,9 @@ namespace CatsMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Breed,ImageUrl")] Cat cat)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Breed,ImageUrl")] CatDTO catDto)
         {
-            if (id != cat.Id)
+            if (id != catDto.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,11 @@ namespace CatsMVC.Controllers
             {
                 try
                 {
-                    _context.Update(cat);
-                    await _context.SaveChangesAsync();
+                    await _catService.UpdateAsync(catDto);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CatExists(cat.Id))
+                    if (!await CatExistsAsync(catDto.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +112,7 @@ namespace CatsMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cat);
+            return View(catDto);
         }
 
         // GET: Cats/Delete/5
@@ -124,8 +123,7 @@ namespace CatsMVC.Controllers
                 return NotFound();
             }
 
-            var cat = await _context.Cat
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cat = await _catService.GetByIdAsync(id.Value);
             if (cat == null)
             {
                 return NotFound();
@@ -139,19 +137,14 @@ namespace CatsMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cat = await _context.Cat.FindAsync(id);
-            if (cat != null)
-            {
-                _context.Cat.Remove(cat);
-            }
-
-            await _context.SaveChangesAsync();
+            await _catService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CatExists(int id)
+        private async Task<bool> CatExistsAsync(int id)
         {
-            return _context.Cat.Any(e => e.Id == id);
+            var item = await _catService.GetByIdAsync(id);
+            return item != null;
         }
     }
 }
