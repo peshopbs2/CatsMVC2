@@ -29,5 +29,6 @@ namespace CatsMVC.Data
 
         }
         public DbSet<CatsMVC.Data.Entities.Cat> Cat { get; set; } = default!;
+        public DbSet<CatsMVC.Data.Entities.Vet> Vet { get; set; } = default!;
     }
 }
