@@ -2,7 +2,7 @@
 
 namespace CatsMVC.Repositories.Abstractions
 {
-    public interface ICatsRepository : ICrudRepository<Cat>
+    public interface IVetRepository : ICrudRepository<Vet>
     {
     }
 }
