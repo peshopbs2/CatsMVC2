@@ -24,6 +24,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICatsRepository, CatsRepository>();
 builder.Services.AddScoped<IVetRepository, VetRepository>();
+builder.Services.AddScoped<IVisitRepository, VisitRepository>();
 builder.Services.AddScoped<ICatService, CatsService>();
 builder.Services.AddScoped<IVetService, VetService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

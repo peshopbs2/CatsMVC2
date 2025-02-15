@@ -9,12 +9,21 @@ namespace CatsMVC.Services
     public class CatsService : ICatService
     {
         private readonly ICatsRepository _catsRepository;
+        private readonly IVisitRepository _visitRepository;
         private readonly IMapper _mapper;
-        public CatsService(ICatsRepository catsRepository, IMapper mapper)
+        public CatsService(ICatsRepository catsRepository, IVisitRepository visitRepository, IMapper mapper)
         {
             _catsRepository = catsRepository;
+            _visitRepository = visitRepository;
             _mapper = mapper;
         }
+
+        public async Task AddCatVisitAsync(CatVisitDTO catVisitDTO)
+        {
+            var visit = _mapper.Map<Visit>(catVisitDTO);
+            await _visitRepository.CreateAsync(visit);
+        }
+
         public async Task CreateAsync(CatDTO catDto)
         {
             var cat = _mapper.Map<Cat>(catDto);
