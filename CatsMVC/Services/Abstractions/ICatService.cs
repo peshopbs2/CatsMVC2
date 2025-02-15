@@ -9,6 +9,6 @@ namespace CatsMVC.Services.Abstractions
         Task CreateAsync(CatDTO catDto);
         Task UpdateAsync(CatDTO catDto);
         Task DeleteAsync(int catId);
-        ICollection<CatDTO> GetByNameAsync(string name);
+        ICollection<CatDTO> GetByName(string name);
     }
 }

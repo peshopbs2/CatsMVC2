@@ -38,7 +38,7 @@ namespace CatsMVC.Services
             return _mapper.Map<CatDTO>(cat);
         }
 
-        public ICollection<CatDTO> GetByNameAsync(string name)
+        public ICollection<CatDTO> GetByName(string name)
         {
             var cats = _catsRepository.GetByFilter(cat => cat.Name == name);
             return _mapper.Map<ICollection<CatDTO>>(cats);

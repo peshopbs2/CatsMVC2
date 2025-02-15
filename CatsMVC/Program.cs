@@ -1,4 +1,5 @@
 using CatsMVC.Data;
+using CatsMVC.Data.Seeders;
 using CatsMVC.Repositories;
 using CatsMVC.Repositories.Abstractions;
 using CatsMVC.Services;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICatsRepository, CatsRepository>();
@@ -22,6 +24,11 @@ builder.Services.AddScoped<ICatService, CatsService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    UserSeeder.Initialize(services).Wait();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
