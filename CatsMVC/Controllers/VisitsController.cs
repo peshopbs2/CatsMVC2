@@ -20,7 +20,7 @@ namespace CatsMVC.Controllers
         {
             var catVisitDto = new CreateCatVisitDTO()
             {
-                
+                VisitDate = DateTime.Now,
                 Cats = (await _catService.GetAllAsync())
                     .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
                     .ToList(),

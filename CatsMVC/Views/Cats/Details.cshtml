@@ -35,6 +35,47 @@
             @Html.DisplayFor(model => model.ImageUrl)
         </dd>
     </dl>
+    <hr />
+    <h5>Vet visits</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Visits.First().Cat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Visits.First().Vet)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Visits.First().VisitDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Visits.First().Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Visits)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cat.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vet.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VisitDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
