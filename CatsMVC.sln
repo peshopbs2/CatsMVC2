@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatsMVC", "CatsMVC\CatsMVC.csproj", "{8BCCF1C9-B262-4C43-9759-EB2B9A6DBA71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatsMVC", "CatsMVC\CatsMVC.csproj", "{8BCCF1C9-B262-4C43-9759-EB2B9A6DBA71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatsMVC.Tests", "CatsMVC.Tests\CatsMVC.Tests.csproj", "{76723E3D-1B52-48A9-AD21-9D5FB73CCE7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8BCCF1C9-B262-4C43-9759-EB2B9A6DBA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BCCF1C9-B262-4C43-9759-EB2B9A6DBA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BCCF1C9-B262-4C43-9759-EB2B9A6DBA71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76723E3D-1B52-48A9-AD21-9D5FB73CCE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76723E3D-1B52-48A9-AD21-9D5FB73CCE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76723E3D-1B52-48A9-AD21-9D5FB73CCE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76723E3D-1B52-48A9-AD21-9D5FB73CCE7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
